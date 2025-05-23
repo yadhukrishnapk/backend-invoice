@@ -5,7 +5,12 @@ import app from './app';
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/invoice_db';
+const MONGODB_URI = process.env.MONGODB_URI;
+if (!MONGODB_URI) {
+  throw new Error('Missing MONGODB_URI environment variable');
+}
+console.log(`Connecting to MongoDB at ${MONGODB_URI}`);
+
 
 mongoose.connect(MONGODB_URI)
   .then(() => {
